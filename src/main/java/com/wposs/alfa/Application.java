@@ -19,7 +19,7 @@ import com.wposs.core.spring.BaseSpringApplication;
 @EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class,  DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableScheduling
 @EnableAsync
-@ComponentScan( basePackages = { "com.wposs.core.*", "com.wposs.alfa.*, com.wposs.alfa.security" } )
+@ComponentScan( basePackages = { "com.wposs.core.*", "com.wposs.alfa.*, com.wposs.alfa.rrhh" } )
 public class Application extends BaseSpringApplication {
 
 	public static void main(String[] args) {

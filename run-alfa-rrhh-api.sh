@@ -3,9 +3,9 @@
 export "ALFA_PROFILE_ENV"="local"
 export "ALFA_CHAR"="?"
 
-export "ALFA_SEGURIDAD_DATASOURCE_URL"="jdbc:mysql://190.25.173.72:3306/alfa?serverTimezone=UTC"
-export "ALFA_SEGURIDAD_DATASOURCE_USERNAME"="alfa"
-export "ALFA_SEGURIDAD_DATASOURCE_PASSWORD"="alfa"
+export "ALFA_SEGURIDAD_DATASOURCE_URL"="jdbc:oracle:thin:@//192.168.100.13/xepdb1"
+export "ALFA_SEGURIDAD_DATASOURCE_USERNAME"="rrhh"
+export "ALFA_SEGURIDAD_DATASOURCE_PASSWORD"="rrhh"
 
 _APP=alfa-rrhh-api
 echo -ne "\033]2;"$_APP"\007"
