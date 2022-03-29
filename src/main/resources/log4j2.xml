@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Properties>
+        <Property name="basePath">/libre/devops/logs/alfa-security</Property>
+        <Property name="appname">alfa-rrhh-api</Property>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5p | %-5t | %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <!-- File Appender -->
+        <RollingFile name="mainAppender" fileName="${basePath}/${appname}/${appname}.log" filePattern="${basePath}/${appname}/backup/${appname}-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout>
+            	<Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+            	<TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRollOverStrategy max="30" />
+        </RollingFile>
+        <RollingFile name="stderrAppender" fileName="${basePath}/${appname}/stderr-${appname}.log" filePattern="${basePath}/${appname}/backup/${appname}-stderr-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout>
+            	<Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] (%-5t) - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+            	<TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRollOverStrategy max="30" />
+        </RollingFile>
+        <RollingFile name="stdoutAppender" fileName="${basePath}/${appname}/stdout-${appname}.log" filePattern="${basePath}/${appname}/backup/${appname}-stdout-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout>
+            	<Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] (%-5t) - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+            	<TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRollOverStrategy max="30" />
+        </RollingFile>
+        <RollingFile name="poolAppender" fileName="${basePath}/${appname}/pool-${appname}.log" filePattern="${basePath}/${appname}/backup/${appname}-pool-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout>
+            	<Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+            	<TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRollOverStrategy max="30" />
+        </RollingFile>
+        <RollingFile name="tramasAppender" fileName="${basePath}/${appname}/tramas-${appname}.log" filePattern="${basePath}/${appname}/backup/${appname}-tramas-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout>
+            	<Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+            	<TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRollOverStrategy max="30" />
+        </RollingFile>
+        <RollingFile name="servicesAppender" fileName="${basePath}/${appname}/services-${appname}.log" filePattern="${basePath}/${appname}/backup/${appname}-services-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout>
+            	<Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+            	<TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRollOverStrategy max="30" />
+        </RollingFile>
+        <!-- Console Appender -->
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <PatternLayout>
+            	<Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] (%-5p) %-5t - %msg%n</Pattern>
+           	</PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="stderr" level="debug" additivity="false">
+			<appender-ref ref="stderrAppender" level="debug" />
+        </Logger>
+        <Logger name="stdout" level="debug" additivity="false">
+			<appender-ref ref="stdoutAppender" level="debug" />
+        </Logger>
+        <Logger name="pool" level="debug" additivity="false">
+			<appender-ref ref="poolAppender" level="debug" />
+        </Logger>
+        <Logger name="tramas" level="debug" additivity="false">
+			<appender-ref ref="tramasAppender" level="debug" />
+        </Logger>
+        <Logger name="services" level="debug" additivity="false">
+			<appender-ref ref="servicesAppender" level="debug" />
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="mainAppender" />
+        </Root>
+    </Loggers>
+</Configuration>

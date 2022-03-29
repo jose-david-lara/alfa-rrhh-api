@@ -1,0 +1,11 @@
+.vscode
+.factorypath
+.DS_Store
+.project
+.classpath
+.settings
+target/**
+node_modules/**
+node_modules/
+packge-lock.json
+/target/
