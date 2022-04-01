@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wposs.alfa.modules.user.model.User;
 import com.wposs.alfa.modules.user.services.UserServices;
 import com.wposs.core.controller.BaseSpringController;
 import com.wposs.core.controller.ProcessController;
@@ -28,6 +29,18 @@ public class UserController extends BaseSpringController<UserServices>{
 		return processController( new ProcessController<BaseResponse<Map<String, Object>>>( request, bindigResult ) {
 			public ResponseEntity<BaseResponse<Map<String, Object>>> onProcess( BaseResponse<Map<String, Object>> response ) throws Exception {
 				response.setModel( getService().searchUserByEmail(request) );
+				return new ResponseEntity<>( response, HttpStatus.OK );
+			}
+		} ) ;
+	}
+
+	@PostMapping("/getEmployedByDocument")
+	@Input(name="documentType",				required="true", 			type="String",				values="")
+	@Input(name="document",					required="true", 			type="String",				values="")
+	public ResponseEntity<BaseResponse<User>> getEmployedByDocument(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception  {
+		return processController( new ProcessController<BaseResponse<User>>( request, bindigResult ) {
+			public ResponseEntity<BaseResponse<User>> onProcess( BaseResponse<User> response ) throws Exception {
+				response.setModel( getService().getEmployedByDocument(request) );
 				return new ResponseEntity<>( response, HttpStatus.OK );
 			}
 		} ) ;

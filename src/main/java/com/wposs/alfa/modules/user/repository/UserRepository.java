@@ -1,68 +1,130 @@
 package com.wposs.alfa.modules.user.repository;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.CallableStatementCreator;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
-import com.wposs.core.jdbc.BaseResultSet;
+import com.wposs.alfa.modules.user.model.User;
 import com.wposs.core.repository.BaseRepositoryDAO;
-import com.wposs.core.repository.ResultSetIterator;
 import com.wposs.core.repository.Sql;
 import com.wposs.core.repository.Transaction;
 
 @Component
 public class UserRepository extends BaseRepositoryDAO {
 
-	
-	@Sql(name="getUser",
-		 sql="select email from users")
-	public  Map<String, Object> searchUserByEmails(Transaction <?> t, Map<String, Object> request) throws Exception  {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+
+	//Example Consume DB
+	public Map<String, Object> exampleQueySimple(Transaction <?> t, Map<String, Object> request) throws Exception  {
+
 		Map<String, Object> response = new HashMap<>();
-		/*executeQuery(t, "getUser", new ResultSetIterator() {
-			
-		
-			public void iterate(BaseResultSet rs) throws Exception {
-				response.put("email", rs.getObject("email"));
-				
+		List<String> listExample = new ArrayList<>();
+		String sql = "SELECT  "
+				+ "1 AS NUMBER"
+				+ "FROM DUAL "
+				+ "WHERE STATE = ? ";
+
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, request.get("state"));
+
+		if(rows != null) {
+			for (Map<String, Object> row : rows) {
+				String exampleObj;
+				exampleObj = (String) row.get("NUMBER");
+				listExample.add(exampleObj);
 			}
-		});*/
-		/*sql = "select email, state from users where email = ?";
-		List<Map<String, Object>> result =  jdbcTemplate.queryForList(sql, new Object[] {
-				request.get("email")
-		});
-		log.info("RESULTADO::"+result);
-		result.forEach( rowMap -> {
-			response.put("email", (String) rowMap.get("email"));
-			response.put("state",  ((Long) rowMap.get("state")).intValue());
-		});*/
-		response.put("respuesta", "Exitoso!!!");
+		}
+		response.put("RESPONSE", listExample);
 		return response;
 	}
 
-	
+	public Map<String, Object> exampleCallPackage(Transaction <?> t, Map<String, Object> request) throws Exception  {
+
+		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("username", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("device", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
+
+		return jdbcTemplate.call(new CallableStatementCreator() {
+			@Override
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_AUTHENTICATION(?,?,?,?,?,?,?,?,?)}");
+				cs.setString(1, request.get("user_app").toString());
+				cs.setString(2, request.get("user").toString());
+				cs.setString(3, request.get("password").toString());
+				cs.setString(4, request.get("device").toString());
+				cs.setString(5, request.get("version").toString());
+				cs.setString(6, request.get("ip").toString());	        
+				cs.registerOutParameter(7, Types.VARCHAR);
+				cs.registerOutParameter(8, Types.VARCHAR);
+				cs.registerOutParameter(9, Types.VARCHAR);
+				return cs;
+			}
+		}, paramList);
+	}
+
+
+
+
+
+
+
+	//Example Consume DB
+	public User getEmployedByDocument(Transaction <?> t, Map<String, Object> request) throws Exception  {
+		String sql = "SELECT "
+				+ "NAMES, "
+				+ "LAST_NAME, "
+				+ "CORPORATE_MAIL, "
+				+ "PERSONAL_MAIL, "
+				+ "BIRTHDAY_DATE "
+				+ "FROM "
+				+ "RRHH.RRHH_PERSONS "
+				+ "WHERE "
+				+ "DOCUMENT_TYPE = ? "
+				+ "AND DOCUMENT = ? ";
+
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, request.get("documentType").toString(), request.get("document").toString());
+		User user = new User();
+		
+		if(rows != null) {
+			for (Map<String, Object> row : rows) {
+				user.setName( row.get("NAME").toString());
+				user.setLastName( row.get("LAST_NAME").toString() );
+				user.setCorporateMail( row.get("CORPORAT_EMAIL").toString() );
+				user.setPersonalMail( row.get("PERSONAL_MAIL").toString() );
+				user.setBirthdayDate( Date.valueOf(row.get("BIRTHDAY_DATE").toString()) );
+			}
+		}
+		return user;
+	}
+
+
 
 	@Sql(name="getUser",
-		 sql="select email from users")
+			sql="select email from users")
 	public  Map<String, Object> searchUserByEmail0(Transaction <?> t, Map<String, Object> request) throws Exception  {
 		Map<String, Object> response = new HashMap<>();
-		executeQuery(t, "getUser", new ResultSetIterator() {
-			
-		
-			public void iterate(BaseResultSet rs) throws Exception {
-				response.put("email", rs.getObject("email"));
-				
-			}
-		});
-		/*sql = "select email, state from users where email = ?";
-		List<Map<String, Object>> result =  jdbcTemplate.queryForList(sql, new Object[] {
-				request.get("email")
-		});
-		log.info("RESULTADO::"+result);
-		result.forEach( rowMap -> {
-			response.put("email", (String) rowMap.get("email"));
-			response.put("state",  ((Long) rowMap.get("state")).intValue());
-		});*/
 		return response;
 	}
 
