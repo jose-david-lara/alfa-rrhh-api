@@ -1,10 +1,10 @@
-package com.wposs.alfa.modules.user.model;
+package com.wposs.alfa.modules.persons.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
-
+public class Person implements Serializable{
+	
 	String name;
 	String lastName;
 	String documentType;
@@ -12,12 +12,11 @@ public class User implements Serializable {
 	String corporateMail;
 	String personalMail;
 	Date birthdayDate;
-
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7371035913143907523L;
-
+	private static final long serialVersionUID = 3717099885938913967L;
 
 	public String getName() {
 		return name;
@@ -77,10 +76,9 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", lastName=" + lastName + ", documentType=" + documentType + ", document="
+		return "Employee [name=" + name + ", lastName=" + lastName + ", documentType=" + documentType + ", document="
 				+ document + ", corporateMail=" + corporateMail + ", personalMail=" + personalMail + ", birthdayDate="
 				+ birthdayDate + "]";
 	}
-
-
+	
 }

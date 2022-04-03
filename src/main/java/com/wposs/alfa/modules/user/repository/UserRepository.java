@@ -2,7 +2,6 @@ package com.wposs.alfa.modules.user.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.user.model.User;
 import com.wposs.core.repository.BaseRepositoryDAO;
 import com.wposs.core.repository.Sql;
 import com.wposs.core.repository.Transaction;
@@ -83,43 +81,6 @@ public class UserRepository extends BaseRepositoryDAO {
 			}
 		}, paramList);
 	}
-
-
-
-
-
-
-
-	//Example Consume DB
-	public User getEmployedByDocument(Transaction <?> t, Map<String, Object> request) throws Exception  {
-		String sql = "SELECT "
-				+ "NAMES, "
-				+ "LAST_NAME, "
-				+ "CORPORATE_MAIL, "
-				+ "PERSONAL_MAIL, "
-				+ "BIRTHDAY_DATE "
-				+ "FROM "
-				+ "RRHH.RRHH_PERSONS "
-				+ "WHERE "
-				+ "DOCUMENT_TYPE = ? "
-				+ "AND DOCUMENT = ? ";
-
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, request.get("documentType").toString(), request.get("document").toString());
-		User user = new User();
-		
-		if(rows != null) {
-			for (Map<String, Object> row : rows) {
-				user.setName( row.get("NAME").toString());
-				user.setLastName( row.get("LAST_NAME").toString() );
-				user.setCorporateMail( row.get("CORPORAT_EMAIL").toString() );
-				user.setPersonalMail( row.get("PERSONAL_MAIL").toString() );
-				user.setBirthdayDate( Date.valueOf(row.get("BIRTHDAY_DATE").toString()) );
-			}
-		}
-		return user;
-	}
-
-
 
 	@Sql(name="getUser",
 			sql="select email from users")

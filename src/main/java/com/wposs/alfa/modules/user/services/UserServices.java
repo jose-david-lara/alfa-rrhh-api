@@ -5,9 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.user.model.User;
 import com.wposs.alfa.modules.user.repository.UserRepository;
-import com.wposs.core.repository.Transaction;
 import com.wposs.core.service.BaseSpringService;
 
 @Component
@@ -24,12 +22,4 @@ public class UserServices extends BaseSpringService<UserRepository>{
 		return response;
 	}
 	
-	public User getEmployedByDocument(Map<String, Object> request) throws Exception  {
-		return beginReadTransaction( new Transaction<User> () {
-			public User doTransaction() throws Exception{
-				return getRepository().getEmployedByDocument( this, request );	
-			}
-		});
-	}
-
 }
