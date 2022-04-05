@@ -32,5 +32,21 @@ public class UserController extends BaseSpringController<UserServices>{
 			}
 		} ) ;
 	}
+
+	
+	@PostMapping("/login")
+	@Input(name="username",					required="true", 			type="Email",				values="")
+	@Input(name="password",				required="true", 			type="String",				values="")
+	@Input(name="ip",					required="true", 			type="String",				values="")
+	@Output(name="response",			required="true", 			type="String",				values="")
+	public ResponseEntity<BaseResponse<Map<String, Object>>> login(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
+		return processController( new ProcessController<BaseResponse<Map<String, Object>>>( request, bindigResult ) {
+			public ResponseEntity<BaseResponse<Map<String, Object>>> onProcess( BaseResponse<Map<String, Object>> response ) throws Exception {
+				response.setModel( getService().login(request) );
+				return new ResponseEntity<>( response, HttpStatus.OK );
+			}
+		} ) ;
+	}
+
 }
 

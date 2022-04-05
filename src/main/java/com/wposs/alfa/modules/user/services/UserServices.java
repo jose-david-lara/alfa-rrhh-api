@@ -23,4 +23,13 @@ public class UserServices extends BaseSpringService<UserRepository>{
 		return response;
 	}
 
+
+	public Map<String, Object> login(Map<String, Object> request) throws Exception {
+		return beginReadTransaction( new Transaction<Map<String, Object>> () {
+			public Map<String, Object> doTransaction() throws Exception{
+				return getRepository().login( this, request );
+			}
+		});
+	}
+
 }
