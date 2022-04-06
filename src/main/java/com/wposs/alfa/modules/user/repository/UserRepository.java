@@ -83,35 +83,27 @@ public class UserRepository extends BaseRepositoryDAO {
 	    }, paramList);
 	}
 	
-	
-	
-	
-	
-	
-	
-	@Sql(name="getUser",
-		 sql="select email from users")
-	public  Map<String, Object> searchUserByEmails(Transaction <?> t, Map<String, Object> request) throws Exception  {
-		Map<String, Object> response = new HashMap<>();
-
+	public Map<String, Object> changePassword(Transaction <?> t, Map<String, Object> request) throws Exception  {
 		
-		
-		
-		return response;
+	    List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+	    paramList.add(new SqlParameter(Types.VARCHAR));
+	    paramList.add(new SqlParameter(Types.VARCHAR));
+	    paramList.add(new SqlOutParameter("response", Types.VARCHAR));
+	    paramList.add(new SqlOutParameter("lastPassword", Types.VARCHAR));
+	    
+	    return jdbcTemplate.call(new CallableStatementCreator() {
+	      @Override
+	      public CallableStatement createCallableStatement(Connection con) throws SQLException {
+	        CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_CHANGE_PASSWORD(?,?,?,?)}");
+	        cs.setString(1, request.get("username").toString());
+	        cs.setString(2, request.get("password").toString());
+	        cs.registerOutParameter(3, Types.VARCHAR);
+	        cs.registerOutParameter(4, Types.VARCHAR);
+	        return cs;
+	      }
+	    }, paramList);
 	}
-
 	
-
-	@Sql(name="getUser",
-		 sql="select email from users")
-	public  Map<String, Object> searchUserByEmail0(Transaction <?> t, Map<String, Object> request) throws Exception  {
-		Map<String, Object> response = new HashMap<>();
-
-		
-		
-		
-		return response;
-	}
 
 
 }
