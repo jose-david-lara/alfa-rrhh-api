@@ -1,11 +1,9 @@
 package com.wposs.alfa.modules.device.service;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.device.model.Device;
 import com.wposs.alfa.modules.device.repository.DeviceRepository;
 import com.wposs.core.repository.Transaction;
 import com.wposs.core.service.BaseSpringService;

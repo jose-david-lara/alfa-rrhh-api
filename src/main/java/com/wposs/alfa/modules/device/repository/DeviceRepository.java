@@ -1,33 +1,30 @@
 package com.wposs.alfa.modules.device.repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.device.model.Device;
+import com.wposs.core.jdbc.BaseResultSet;
 import com.wposs.core.repository.BaseRepositoryDAO;
+import com.wposs.core.repository.ResultSetIterator;
+import com.wposs.core.repository.Sql;
 import com.wposs.core.repository.Transaction;
 
 @Component
 public class DeviceRepository extends BaseRepositoryDAO{
 
 
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-
-
 	/*
 	 * Ejemplo para TODO!!!
 	 * 
 	 */
+	@Sql( name="getDevice",
+			sql="SELECT SERIAL, MODELO FROM EQUIPOS WHERE ESTADO = ?"
+			)
 	public  Map<String, Object> getDevice(Transaction <?> t, Map<String, Object> request) throws Exception  {
 
-		Map<String, Object> responseDB = new HashMap<>();
+		/*Map<String, Object> responseDB = new HashMap<>();
 		List<Device> devices = new ArrayList<>();
 		String sql = "select serial, modelo from equipos where estado = ?";
 
@@ -49,7 +46,16 @@ public class DeviceRepository extends BaseRepositoryDAO{
 			responseDB.put("message", "no existen datos");
 		}
 
-		return responseDB;
+		return responseDB;*/
+		
+		executeQuery( t, "getDevice", new ResultSetIterator() {
+			
+			@Override
+			public void iterate(BaseResultSet rs) throws Exception {
+				System.err.println("RAFA::::Trae de la BD");
+			}
+		}, 1);
+		return new HashMap<String, Object>();
 		
 		
 	}

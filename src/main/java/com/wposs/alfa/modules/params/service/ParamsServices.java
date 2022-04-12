@@ -16,9 +16,7 @@ public class ParamsServices extends BaseSpringService<ParamsRepository>{
 			public Map<String, Object> doTransaction() throws Exception{
 				return getRepository().getParameters(this, request);
 			}
-			
 		});
-				
 	}
 
 }
