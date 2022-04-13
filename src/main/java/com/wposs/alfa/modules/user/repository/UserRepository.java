@@ -17,7 +17,6 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
 import com.wposs.core.repository.BaseRepositoryDAO;
-import com.wposs.core.repository.Sql;
 import com.wposs.core.repository.Transaction;
 
 @Component
@@ -89,16 +88,44 @@ public class UserRepository extends BaseRepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("id_user", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("response", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?)}");
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?,?)}");
 				cs.setString(1, request.get("username").toString());
 				cs.setString(2, request.get("password").toString());
 				cs.setString(3, request.get("ip").toString());
 				cs.registerOutParameter(4, Types.VARCHAR);
+				cs.registerOutParameter(5, Types.VARCHAR);
+				return cs;
+			}
+		}, paramList);
+		
+	}
+	
+	public Map<String, Object> saveToken(Transaction <?> t, Map<String, Object> request) {
+		
+		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("id_token", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("response", Types.VARCHAR));
+
+		return jdbcTemplate.call(new CallableStatementCreator() {
+			@Override
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_SAVE_TOKEN(?,?,?,?,?,?)}");
+				cs.setString(1, request.get("token").toString());
+				cs.setString(2, request.get("creationDateToken").toString());
+				cs.setString(3, request.get("expirationDateToken").toString());
+				cs.setString(4, request.get("id_user").toString());
+				cs.registerOutParameter(5, Types.VARCHAR);
+				cs.registerOutParameter(6, Types.VARCHAR);
 				return cs;
 			}
 		}, paramList);

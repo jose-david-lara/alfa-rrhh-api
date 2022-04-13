@@ -35,7 +35,7 @@ public class UserController extends BaseSpringController<UserServices>{
 
 	
 	@PostMapping("/login")
-	@Input(name="username",					required="true", 			type="Email",				values="")
+	@Input(name="username",				required="true", 			type="Email",				values="")
 	@Input(name="password",				required="true", 			type="String",				values="")
 	@Input(name="ip",					required="true", 			type="String",				values="")
 	@Output(name="response",			required="true", 			type="String",				values="")
