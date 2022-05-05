@@ -1,25 +1,35 @@
 package com.wposs.alfa.modules.test.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.wposs.core.repository.BaseRepositoryDAO;
-import com.wposs.core.repository.Transaction;
+import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 
 @Component
-public class TestRepository extends BaseRepositoryDAO{
+public class TestRepository extends RepositoryDAO{
 
 
-
-	public  Map<String, Object> getTEST(Transaction <?> t, Map<String, Object> request) throws Exception  {
-		int idEquipo = 1;
-		Map<String, Object> response = new HashMap<>();
+	public  Map<String, Object> getTESTRepository( Map<String, Object> request) throws Exception  {
+		Map<String, Object> respuesta = new HashMap<>();
 		
-		response.put("TEST", request.get("test"));
+		String sql = "SELECT  "
+				+ "'JOSE' AS NUMERO "
+				+ "FROM DUAL ";
 
-		return response;
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+		if(rows != null) {
+			for (Map<String, Object> row : rows) {
+				System.out.println("RESPUESTA DB::"+(String) row.get("NUMERO"));
+				respuesta.put("numero", (String) row.get("NUMERO"));
+				
+			}
+		}
+		
+		return  respuesta;
 	}
 }
