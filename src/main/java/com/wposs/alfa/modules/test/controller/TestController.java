@@ -11,27 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wposs.alfa.modules.test.service.TestServices;
-import com.wposs.core.controller.BaseSpringController;
-import com.wposs.core.controller.ProcessController;
-import com.wposs.core.model.BaseResponse;
-import com.wposs.core.spring.Input;
-import com.wposs.core.spring.Output;
+import com.wposs.alfa_framework.spring.Input;
+import com.wposs.alfa_framework.spring.Output;
+import com.wposs.alfa_framework.spring.ResponseModel;
 
 
 @RestController
 @RequestMapping(path = "/test")
-public class TestController extends BaseSpringController<TestServices> {
+public class TestController extends TestServices {
 	
 	@PostMapping("/getTest")
 	@Input(name="test",	            required="true", 			type="String",				values="")
 	@Output(name="json",			required="true", 			type="String",				values="")
-	public ResponseEntity<BaseResponse<Map<String, Object>>> getTEST(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
-		return processController( new ProcessController<BaseResponse<Map<String, Object>>>( request, bindigResult ) {
-			public ResponseEntity<BaseResponse<Map<String, Object>>> onProcess( BaseResponse<Map<String, Object>> response ) throws Exception {
-				response.setModel( getService().getTEST(request) );
-				return new ResponseEntity<>( response, HttpStatus.OK );
-			}
-		} ) ;
+	public ResponseEntity<ResponseModel> getTEST(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
+
+	  
+		return new ResponseEntity<ResponseModel>(getTEST(request), HttpStatus.OK);
+
 	}
 
 }

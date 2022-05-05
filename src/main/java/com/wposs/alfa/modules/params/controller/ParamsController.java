@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wposs.alfa.modules.params.service.ParamsServices;
-import com.wposs.core.controller.BaseSpringController;
-import com.wposs.core.controller.ProcessController;
-import com.wposs.core.model.BaseResponse;
-import com.wposs.core.spring.Input;
-import com.wposs.core.spring.Output;
+import com.wposs.alfa_framework.spring.Input;
+import com.wposs.alfa_framework.spring.Output;
+import com.wposs.alfa_framework.spring.ResponseModel;
 
 @RestController
 @RequestMapping(path = "/params")
-public class ParamsController extends BaseSpringController<ParamsServices>{
+public class ParamsController extends ParamsServices{
 
 	@PostMapping("/getParameters")
 	@Input(name="versionPOS",	    required="true", 			type="String",				values="")
@@ -29,12 +27,8 @@ public class ParamsController extends BaseSpringController<ParamsServices>{
 	@Input(name="serialPOS",	    required="true", 			type="String",				values="")
 	@Input(name="id_equipo",	    required="true", 			type="String",				values="")
 	@Output(name="json",			required="true", 			type="String",				values="")
-	public ResponseEntity<BaseResponse<Map<String, Object>>> getParameters(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
-		return processController( new ProcessController<BaseResponse<Map<String, Object>>>( request, bindigResult ) {
-			public ResponseEntity<BaseResponse<Map<String, Object>>> onProcess( BaseResponse<Map<String, Object>> response ) throws Exception {
-				response.setModel( getService().getParameters(request) );
-				return new ResponseEntity<>( response, HttpStatus.OK );
-			}
-		} ) ;
+	public ResponseEntity<ResponseModel>  getParameters(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
+		
+		return new ResponseEntity<ResponseModel>(getParameters(request), HttpStatus.OK);
 	}
 }

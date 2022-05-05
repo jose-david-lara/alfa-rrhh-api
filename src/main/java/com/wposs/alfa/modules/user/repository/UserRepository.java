@@ -9,50 +9,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.CallableStatementCreator;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
-import com.wposs.core.repository.BaseRepositoryDAO;
-import com.wposs.core.repository.Sql;
-import com.wposs.core.repository.Transaction;
+import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
-public class UserRepository extends BaseRepositoryDAO {
+public class UserRepository extends RepositoryDAO {
 
 	
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
-	
-	//Example Consume DB
-	public Map<String, Object> exampleQueySimple(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public Map<String, Object> exampleQueySimple(Map<String, Object> request) throws Exception  {
 		
-		Map<String, Object> response = new HashMap<>();
-		List<String> listExample = new ArrayList<>();
+		Map<String, Object> respuesta = new HashMap<>();
+		
 		String sql = "SELECT  "
-				+ "1 AS NUMBER"
-				+ "FROM DUAL "
-				+ "WHERE STATE = ? ";
+				+ "'JOSE' AS NUMERO "
+				+ "FROM DUAL ";
 
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,
-				request.get("state"));
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
 		if(rows != null) {
 			for (Map<String, Object> row : rows) {
-				String exampleObj;
-				exampleObj = (String) row.get("NUMBER");
-				listExample.add(exampleObj);
+				System.out.println("RESPUESTA DB::"+(String) row.get("NUMERO"));
+				respuesta.put("numero", (String) row.get("NUMERO"));
+				
 			}
 		}
-		response.put("RESPONSE", listExample);
-		return response;
+		
+		return  respuesta;
 	}
 	
-	public Map<String, Object> exampleCallPackage(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public Map<String, Object> exampleCallPackage(Map<String, Object> request) throws Exception  {
 		
 	    List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 	    paramList.add(new SqlParameter(Types.VARCHAR));
@@ -83,35 +73,6 @@ public class UserRepository extends BaseRepositoryDAO {
 	    }, paramList);
 	}
 	
-	
-	
-	
-	
-	
-	
-	@Sql(name="getUser",
-		 sql="select email from users")
-	public  Map<String, Object> searchUserByEmails(Transaction <?> t, Map<String, Object> request) throws Exception  {
-		Map<String, Object> response = new HashMap<>();
-
-		
-		
-		
-		return response;
-	}
-
-	
-
-	@Sql(name="getUser",
-		 sql="select email from users")
-	public  Map<String, Object> searchUserByEmail0(Transaction <?> t, Map<String, Object> request) throws Exception  {
-		Map<String, Object> response = new HashMap<>();
-
-		
-		
-		
-		return response;
-	}
 
 
 }
