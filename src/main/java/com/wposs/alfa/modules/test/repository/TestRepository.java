@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.wposs.alfa.modules.test.dto.TestInput;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 
@@ -13,7 +14,7 @@ import com.wposs.alfa_framework.spring.RepositoryDAO;
 public class TestRepository extends RepositoryDAO{
 
 
-	public  Map<String, Object> getTESTRepository( Map<String, Object> request) throws Exception  {
+	public  Map<String, Object> getTESTRepository( TestInput inputTest) throws Exception  {
 		Map<String, Object> respuesta = new HashMap<>();
 		
 		String sql = "SELECT  "
