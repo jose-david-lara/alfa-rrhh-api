@@ -12,14 +12,12 @@ import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
-
+import com.wposs.alfa.modules.user.dto.LoginInput;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
 public class UserRepository extends RepositoryDAO {
-
 	
-
 	public Map<String, Object> exampleQueySimple(Map<String, Object> request) throws Exception  {
 		
 		Map<String, Object> respuesta = new HashMap<>();
@@ -72,7 +70,7 @@ public class UserRepository extends RepositoryDAO {
 	    }, paramList);
 	}
 	
-	public Map<String, Object> login( Map<String, Object> request) {
+	public Map<String, Object> loginRepository( LoginInput loginInput) {
 		
 		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 		paramList.add(new SqlParameter(Types.VARCHAR));
@@ -85,9 +83,9 @@ public class UserRepository extends RepositoryDAO {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
 				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?,?)}");
-				cs.setString(1, request.get("username").toString());
-				cs.setString(2, request.get("password").toString());
-				cs.setString(3, request.get("ip").toString());
+				cs.setString(1, loginInput.getUsername());
+				cs.setString(2, loginInput.getPassword());
+				cs.setString(3, loginInput.getIp());
 				cs.registerOutParameter(4, Types.VARCHAR);
 				cs.registerOutParameter(5, Types.VARCHAR);
 				return cs;
@@ -96,7 +94,7 @@ public class UserRepository extends RepositoryDAO {
 		
 	}
 	
-	public Map<String, Object> saveToken(Map<String, Object> request) {
+	public Map<String, Object> saveTokenRepository(Map<String, Object> request) {
 		
 		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 		paramList.add(new SqlParameter(Types.VARCHAR));
