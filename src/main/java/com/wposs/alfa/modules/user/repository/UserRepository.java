@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.transaction.Transaction;
-
 import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -75,7 +72,7 @@ public class UserRepository extends RepositoryDAO {
 	    }, paramList);
 	}
 	
-	public Map<String, Object> login(Transaction <?> t, Map<String, Object> request) {
+	public Map<String, Object> login( Map<String, Object> request) {
 		
 		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 		paramList.add(new SqlParameter(Types.VARCHAR));
@@ -99,7 +96,7 @@ public class UserRepository extends RepositoryDAO {
 		
 	}
 	
-	public Map<String, Object> saveToken(Transaction <?> t, Map<String, Object> request) {
+	public Map<String, Object> saveToken(Map<String, Object> request) {
 		
 		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 		paramList.add(new SqlParameter(Types.VARCHAR));
