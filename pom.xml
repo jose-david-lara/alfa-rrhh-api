@@ -44,8 +44,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.wposs.alfaframework</groupId>
-			<artifactId>alfaframework-spring</artifactId>
+			<groupId>com.wposs</groupId>
+			<artifactId>alfa-framework</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

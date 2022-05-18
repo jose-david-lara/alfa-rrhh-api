@@ -4,28 +4,20 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.CallableStatementCreator;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.employess.model.Employee;
-import com.wposs.core.repository.BaseRepositoryDAO;
-import com.wposs.core.repository.Transaction;
+import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
-public class EmployeeRepository extends BaseRepositoryDAO{
+public class EmployeeRepository extends RepositoryDAO{
 
 
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
 
 
 	/*
@@ -33,7 +25,7 @@ public class EmployeeRepository extends BaseRepositoryDAO{
 	 * 
 	 */
 
-	public Map<String, Object> getExampleOneQuery(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public Map<String, Object> getExampleOneQuery( Map<String, Object> request) throws Exception  {
 
 		Map<String, Object> categories = null;
 		String sql = "SELECT  "
@@ -59,7 +51,7 @@ public class EmployeeRepository extends BaseRepositoryDAO{
 	}
 		
 
-	public Map<String, Object>  getExampleTwoPackages(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public Map<String, Object>  getExampleTwoPackages( Map<String, Object> request) throws Exception  {
 		
 		Map<String, Object>  business = null;
 		String sql = "SELECT  "

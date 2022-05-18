@@ -5,19 +5,17 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.wposs.alfa.modules.employess.repository.EmployeeRepository;
-import com.wposs.core.repository.Transaction;
-import com.wposs.core.service.BaseSpringService;
+import com.wposs.alfa_framework.spring.ResponseModel;
 
 @Component
-public class EmployeeServices extends BaseSpringService<EmployeeRepository>{
+public class EmployeeServices extends EmployeeRepository{
 	
-	public Map<String, Object> getEmployees(Map<String, Object> request) throws Exception {
-		return beginReadTransaction(new Transaction<Map<String, Object>>() {
-			public Map<String, Object> doTransaction() throws Exception{
-				return getRepository().getExampleOneQuery(this, request);
-			}
-			
-		});
+	public ResponseModel getEmployees(Map<String, Object> request) throws Exception {
+		
+		ResponseModel rspModel = new ResponseModel();
+		rspModel.setData(getExampleOneQuery( request));
+		
+		return rspModel;
 				
 	}
 }
