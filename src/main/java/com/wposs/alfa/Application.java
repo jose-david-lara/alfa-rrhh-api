@@ -11,16 +11,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.wposs.alfa.utilities.AlfaUtils;
-import com.wposs.core.log.AppLogger;
-import com.wposs.core.spring.BaseSpringApplication;
-
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class,  DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableScheduling
 @EnableAsync
-@ComponentScan( basePackages = { "com.wposs.core.*", "com.wposs.alfa.*, com.wposs.alfa.rrhh" } )
-public class Application extends BaseSpringApplication {
+@ComponentScan( basePackages = { "com.wposs.*, com.wposs.alfa.rrhh" } )
+public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run( Application.class, args);

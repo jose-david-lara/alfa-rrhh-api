@@ -1,23 +1,22 @@
 package com.wposs.alfa.modules.params.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import com.wposs.alfa.modules.params.repository.ParamsRepository;
-import com.wposs.core.repository.Transaction;
-import com.wposs.core.service.BaseSpringService;
+import com.wposs.alfa_framework.spring.ResponseModel;
 
 @Component
-public class ParamsServices extends BaseSpringService<ParamsRepository>{
+public class ParamsServices extends ParamsRepository{
 	
-	public Map<String, Object> getParameters(Map<String, Object> request) throws Exception {
-		return beginReadTransaction(new Transaction<Map<String, Object>>() {
-			public Map<String, Object> doTransaction() throws Exception{
-				return getRepository().getParameters(this, request);
-			}
-			
-		});
+	public ResponseModel getParameters(Map<String, Object> request) throws Exception {
+		
+		ResponseModel rspModel = new ResponseModel();
+		rspModel.setData(getParameters( request));
+		
+		return rspModel;
 				
 	}
 
