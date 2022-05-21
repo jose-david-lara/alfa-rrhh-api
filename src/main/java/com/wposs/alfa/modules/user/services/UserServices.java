@@ -2,9 +2,8 @@ package com.wposs.alfa.modules.user.services;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.stereotype.Component;
-
+import com.wposs.alfa.modules.user.dto.ChangePasswordInput;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.spring.ResponseModel;
 
@@ -22,12 +21,22 @@ public class UserServices extends UserRepository{
 		return rspModel;
 	}
 	
-	public Map<String, Object> changePassword(Map<String, Object> request) throws Exception {
-		return beginReadTransaction( new Transaction<Map<String, Object>> () {
-			public Map<String, Object> doTransaction() throws Exception{
-				return getRepository().changePassword( this, request );	
-			}
-		});
+	public ResponseModel changePasswordService(ChangePasswordInput changePasswordInput) throws Exception {
+		Map<String, Object> map = changePasswordRespository(changePasswordInput);
+		ResponseModel responseModel = new ResponseModel(); 
+		if (map.get("response").equals("Cambio de clave exitoso")) {
+			responseModel.setCode("00");
+			responseModel.setError(false);
+			responseModel.setData(map.get("response"));
+			responseModel.setMessage("Su clave fue actualizada exitosamente");
+			return responseModel; 
+		} else {
+			responseModel.setCode("01");
+			responseModel.setError(true);
+			responseModel.setData(map.get("response"));
+			responseModel.setMessage("Su clave no fue actualizada");
+			return responseModel; 
+		}
 	}
 
 }

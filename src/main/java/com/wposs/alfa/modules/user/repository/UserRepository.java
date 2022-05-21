@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
+import com.wposs.alfa.modules.user.dto.ChangePasswordInput;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
@@ -74,20 +74,20 @@ public class UserRepository extends RepositoryDAO {
 	}
 	
 
-	public Map<String, Object> changePassword(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public Map<String, Object> changePasswordRespository( ChangePasswordInput changePasswordInput) throws Exception  {
 		
 	    List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 	    paramList.add(new SqlParameter(Types.VARCHAR));
 	    paramList.add(new SqlParameter(Types.VARCHAR));
 	    paramList.add(new SqlOutParameter("response", Types.VARCHAR));
-	    paramList.add(new SqlOutParameter("lastPassword", Types.VARCHAR));
+	    paramList.add(new SqlOutParameter("PASSWORD_OUT", Types.VARCHAR));
 	    
 	    return jdbcTemplate.call(new CallableStatementCreator() {
 	      @Override
 	      public CallableStatement createCallableStatement(Connection con) throws SQLException {
 	        CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_CHANGE_PASSWORD(?,?,?,?)}");
-	        cs.setString(1, request.get("username").toString());
-	        cs.setString(2, request.get("password").toString());
+	        cs.setString(1, changePasswordInput.getEmail());
+	        cs.setString(2, changePasswordInput.getNewPassword());
 	        cs.registerOutParameter(3, Types.VARCHAR);
 	        cs.registerOutParameter(4, Types.VARCHAR);
 	        return cs;
