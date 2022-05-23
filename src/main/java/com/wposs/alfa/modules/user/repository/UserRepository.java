@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.user.dto.ChangePasswordInput;
+import com.wposs.alfa.modules.user.dto.ChangePasswordInputDTO;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
@@ -74,7 +74,7 @@ public class UserRepository extends RepositoryDAO {
 	}
 	
 
-	public Map<String, Object> changePasswordRespository( ChangePasswordInput changePasswordInput) throws Exception  {
+	public Map<String, Object> changePasswordRespository( ChangePasswordInputDTO changePasswordInput) throws Exception  {
 		
 	    List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 	    paramList.add(new SqlParameter(Types.VARCHAR));

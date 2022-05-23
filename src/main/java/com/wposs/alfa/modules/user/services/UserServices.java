@@ -3,7 +3,8 @@ package com.wposs.alfa.modules.user.services;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import com.wposs.alfa.modules.user.dto.ChangePasswordInput;
+
+import com.wposs.alfa.modules.user.dto.ChangePasswordInputDTO;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.spring.ResponseModel;
 
@@ -21,7 +22,7 @@ public class UserServices extends UserRepository{
 		return rspModel;
 	}
 	
-	public ResponseModel changePasswordService(ChangePasswordInput changePasswordInput) throws Exception {
+	public ResponseModel changePasswordService(ChangePasswordInputDTO changePasswordInput) throws Exception {
 		Map<String, Object> map = changePasswordRespository(changePasswordInput);
 		ResponseModel responseModel = new ResponseModel(); 
 		if (map.get("response").equals("Cambio de clave exitoso")) {

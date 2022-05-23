@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wposs.alfa.modules.user.dto.ChangePasswordInput;
+import com.wposs.alfa.modules.user.dto.ChangePasswordInputDTO;
 import com.wposs.alfa.modules.user.services.UserServices;
 import com.wposs.alfa_framework.spring.Input;
 import com.wposs.alfa_framework.spring.Output;
@@ -34,7 +34,7 @@ public class UserController extends UserServices{
 	}
 	
 	@PostMapping("/changePassword")
-	public ResponseEntity<ResponseModel> changePassword(@RequestBody @Valid ChangePasswordInput changePasswordInput, BindingResult bindigResult ) throws Exception {
+	public ResponseEntity<ResponseModel> changePassword(@RequestBody @Valid ChangePasswordInputDTO changePasswordInput, BindingResult bindigResult ) throws Exception {
 		if(bindigResult.hasErrors()) {
 			validBody = new ValidateBody();
 	    	return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindigResult),HttpStatus.OK);

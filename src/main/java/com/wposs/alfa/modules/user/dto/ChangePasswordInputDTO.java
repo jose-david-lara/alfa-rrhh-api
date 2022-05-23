@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class ChangePasswordInput implements Serializable{
+public class ChangePasswordInputDTO implements Serializable{
 	
 	/**
 	 * 
@@ -13,11 +13,11 @@ public class ChangePasswordInput implements Serializable{
 	private static final long serialVersionUID = -771125977292743225L;
 	
 	@NotNull
-	@NotBlank(message = "El campo -email- no puede ir vacio")
+	@NotBlank(message = "El campo no puede ir vacio")
 	String email;
 	@NotNull
-	@NotBlank(message = "El campo -password- no puede ir vacio")
-	String newPassword;
+	@NotBlank(message = "El campo no puede ir vacio")
+	String new_password;
 	
 	
 	public String getEmail() {
@@ -28,14 +28,14 @@ public class ChangePasswordInput implements Serializable{
 	}
 		
 	public String getNewPassword() {
-		return newPassword;
+		return new_password;
 	}
 	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
+		this.new_password = newPassword;
 	}
 	@Override
 	public String toString() {
-		return "ChangePasswordInput [email=" + email + ", password=" + newPassword + "]";
+		return "ChangePasswordInput [email=" + email + ", password=" + new_password + "]";
 	} 
 
 }
