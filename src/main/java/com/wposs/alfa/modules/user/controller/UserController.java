@@ -11,26 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wposs.alfa.modules.user.services.UserServices;
-import com.wposs.core.controller.BaseSpringController;
-import com.wposs.core.controller.ProcessController;
-import com.wposs.core.model.BaseResponse;
-import com.wposs.core.spring.Input;
-import com.wposs.core.spring.Output;
+import com.wposs.alfa_framework.spring.Input;
+import com.wposs.alfa_framework.spring.Output;
+import com.wposs.alfa_framework.spring.ResponseModel;
 
 @RestController
 @RequestMapping(path = "/users")
-public class UserController extends BaseSpringController<UserServices>{
+public class UserController extends UserServices{
 
 	@PostMapping("/searchUserByEmail")
 	@Input(name="email",			required="true", 			type="Email",				values="")
 	@Output(name="respuesta",			required="true", 			type="String",				values="")
-	public ResponseEntity<BaseResponse<Map<String, Object>>> searchUserByEmail(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
-		return processController( new ProcessController<BaseResponse<Map<String, Object>>>( request, bindigResult ) {
-			public ResponseEntity<BaseResponse<Map<String, Object>>> onProcess( BaseResponse<Map<String, Object>> response ) throws Exception {
-				response.setModel( getService().searchUserByEmail(request) );
-				return new ResponseEntity<>( response, HttpStatus.OK );
-			}
-		} ) ;
+	public ResponseEntity<ResponseModel> searchUserByEmail(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
+		
+		return new ResponseEntity<ResponseModel>(searchUserByEmail(request), HttpStatus.OK);
 	}
 
 }
