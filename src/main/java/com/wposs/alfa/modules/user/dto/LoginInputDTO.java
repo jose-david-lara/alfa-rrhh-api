@@ -8,17 +8,18 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.lang.NonNull;
 
 @Entity
-public class LoginInput implements Serializable{
+public class LoginInputDTO implements Serializable{
 	
 	private static final long serialVersionUID = -581482128021864287L;
 	
 	@NonNull
-	@NotBlank(message = "El campo -username- no puede esta vacio")
+	@NotBlank(message = "El campo no puede esta vacio")
 	private String username; 
 	@NonNull
-	@NotBlank(message = "El campo -password- no puede esta vacio")
+	@NotBlank(message = "El campo no puede esta vacio")
 	private String password; 
 	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
 	private String ip;
 	
 	

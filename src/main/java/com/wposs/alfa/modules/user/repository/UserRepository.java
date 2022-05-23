@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
-import com.wposs.alfa.modules.user.dto.LoginInput;
+import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
@@ -70,28 +70,31 @@ public class UserRepository extends RepositoryDAO {
 	    }, paramList);
 	}
 	
-	public Map<String, Object> loginRepository( LoginInput loginInput) {
+	public Map<String, Object> loginRepository( LoginInputDTO loginInput) {
 		
 		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlOutParameter("id_user", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("names", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("id_person", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("response", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?,?)}");
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?,?,?,?)}");
 				cs.setString(1, loginInput.getUsername());
 				cs.setString(2, loginInput.getPassword());
 				cs.setString(3, loginInput.getIp());
 				cs.registerOutParameter(4, Types.VARCHAR);
 				cs.registerOutParameter(5, Types.VARCHAR);
+				cs.registerOutParameter(6, Types.VARCHAR);
+				cs.registerOutParameter(7, Types.VARCHAR);
 				return cs;
 			}
 		}, paramList);
-		
 	}
 	
 	public Map<String, Object> saveTokenRepository(Map<String, Object> request) {

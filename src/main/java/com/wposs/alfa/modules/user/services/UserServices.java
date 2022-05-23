@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.user.dto.LoginInput;
+import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.spring.ResponseModel;
 
@@ -25,7 +25,7 @@ public class UserServices extends UserRepository{
 		return rspModel;
 	}
 
-	public ResponseModel loginService(LoginInput loginInput) throws Exception {
+	public ResponseModel loginService(LoginInputDTO loginInput) throws Exception {
 		rspModel = new ResponseModel();
 		Map<String, Object> mapResponse = loginRepository(loginInput);
 		String response = (String) mapResponse.get("response");
@@ -36,12 +36,12 @@ public class UserServices extends UserRepository{
 			rspModel.setCode("00");
 			rspModel.setMessage("Login exitoso");
 			rspModel.setError(false);
-			rspModel.setData("El login fue realizado exitosamente");
+			rspModel.setData(mapResponse.get("names"));
 		} else {
 			rspModel.setCode("01");
 			rspModel.setMessage("Login fallido");
 			rspModel.setError(true);
-			rspModel.setData("El login fue realizado exitosamente");
+			rspModel.setData(mapResponse.get("response"));
 		}
 		
 		return rspModel;
