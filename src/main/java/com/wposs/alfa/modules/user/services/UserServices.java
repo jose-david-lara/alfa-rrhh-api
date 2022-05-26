@@ -1,14 +1,12 @@
 package com.wposs.alfa.modules.user.services;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import org.springframework.stereotype.Component;
-
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa.modules.user.repository.UserRepository;
+import com.wposs.alfa_framework.security.SecurityService;
+import com.wposs.alfa_framework.spring.CodeResponseRequest;
 import com.wposs.alfa_framework.spring.ResponseModel;
 
 @Component
@@ -29,38 +27,27 @@ public class UserServices extends UserRepository{
 		rspModel = new ResponseModel();
 		Map<String, Object> mapResponse = loginRepository(loginInput);
 		String response = (String) mapResponse.get("response");
-		if( response.equals("Login exitoso") ) {
-			Map<String, Object> mapToken = generateToken((String) mapResponse.get("id_user"));
-			String rep_token = saveToken(mapToken);
-			System.out.println(rep_token);
-			rspModel.setCode("00");
-			rspModel.setMessage("Login exitoso");
-			rspModel.setError(false);
-			rspModel.setData(mapResponse.get("names"));
-		} else {
-			rspModel.setCode("01");
-			rspModel.setMessage("Login fallido");
+		try {
+			if( response.equals("Login exitoso") ) {
+				saveTokenRepository(SecurityService.generateToken((String) mapResponse.get("id_user")));
+				rspModel.setCode(CodeResponseRequest.COD_MSG_SUCCESS);
+				rspModel.setMessage("Login exitoso");
+				rspModel.setError(false);
+				rspModel.setData(mapResponse.get("names"));
+			} else {
+				rspModel.setCode("01");
+				rspModel.setMessage(CodeResponseRequest.ERROR_LOGIN);
+				rspModel.setError(true);
+				rspModel.setData(mapResponse.get("response"));
+			}
+		}catch(Exception e) {
+			System.out.println("ERROR:::"+e.getMessage());
+			rspModel.setCode(CodeResponseRequest.COD_ERROR_EXCEPTION_BKND);
+			rspModel.setMessage(CodeResponseRequest.ERROR_BACKEND);
 			rspModel.setError(true);
-			rspModel.setData(mapResponse.get("response"));
 		}
 		
 		return rspModel;
 	}
 	
-	private Map<String, Object> generateToken(String id_user) {
-		Map<String, Object> maptoken = new HashMap<>();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		Random random = new Random();
-		maptoken.put("token", String.valueOf( random.nextInt(999999 - 000000 + 1) + 000000));
-		maptoken.put("creationDateToken",  String.valueOf(dtf.format(LocalDateTime.now())));
-		maptoken.put("expirationDateToken",  String.valueOf(dtf.format(LocalDateTime.now())));
-		maptoken.put("id_user", id_user);
-		return maptoken; 
-	}
-	
-	private String saveToken(Map<String, Object> tokenParams) throws Exception {
-		Map<String, Object> map = saveTokenRepository( tokenParams);
-		return (String)map.get("response"); 
-	}
-
 }
