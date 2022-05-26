@@ -1,5 +1,6 @@
 package com.wposs.alfa.modules.persons.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +52,13 @@ public class PersonRepository extends RepositoryDAO{
 		return person;
 	}
 
-	/*public BaseArrayModel<Person> getAllPersons(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public ArrayList<Person> getAllPersons() throws Exception  {
+		ArrayList<Person> persons = new ArrayList<>(); 
 		String sql = "SELECT "
 				+ "NAMES, "
 				+ "LAST_NAMES, "
+				+ "DOCUMENT_TYPE, "
+				+ "DOCUMENT, "
 				+ "CORPORATE_MAIL, "
 				+ "PERSONAL_MAIL, "
 				+ "BIRTHDAY_DATE "
@@ -62,13 +66,14 @@ public class PersonRepository extends RepositoryDAO{
 				+ "RRHH.RRHH_PERSONS ";
 
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
-		BaseArrayModel<Person> persons = new BaseArrayModel<>();
 		
 		if(rows != null) {
 			for (Map<String, Object> row : rows) {
 				Person person = new Person();
 				person.setName( row.get("NAMES").toString());
 				person.setLastName( row.get("LAST_NAMES").toString() );
+				person.setDocumentType(row.get("DOCUMENT_TYPE").toString() );
+				person.setDocument(row.get("DOCUMENT").toString() );
 				person.setCorporateMail( row.get("CORPORATE_MAIL").toString() );
 				person.setPersonalMail( row.get("PERSONAL_MAIL").toString() );
 				person.setBirthdayDate( (Date) row.get("BIRTHDAY_DATE") );
@@ -76,6 +81,6 @@ public class PersonRepository extends RepositoryDAO{
 			}
 		}
 		return persons;
-	}/*/
+	}
 
 }
