@@ -8,22 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.wposs.alfa.modules.persons.dto.PersonByDocumentInputDTO;
 import com.wposs.alfa.modules.persons.model.Person;
-import com.wposs.core.model.BaseArrayModel;
-import com.wposs.core.repository.BaseRepositoryDAO;
-import com.wposs.core.repository.Transaction;
+import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
-public class PersonRepository extends BaseRepositoryDAO{
+public class PersonRepository extends RepositoryDAO{
 
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public Person getPersonByDocument(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	public Person getPersonByDocument(PersonByDocumentInputDTO inputDTO) throws Exception  {
 		String sql = "SELECT "
 				+ "NAMES, "
 				+ "LAST_NAMES, "
+				+ "DOCUMENT_TYPE, "
+				+ "DOCUMENT, "
 				+ "CORPORATE_MAIL, "
 				+ "PERSONAL_MAIL, "
 				+ "BIRTHDAY_DATE "
@@ -33,13 +34,15 @@ public class PersonRepository extends BaseRepositoryDAO{
 				+ "DOCUMENT_TYPE = ? "
 				+ "AND DOCUMENT = ? ";
 
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, request.get("documentType").toString(), request.get("document").toString());
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, inputDTO.getDocument_type(), inputDTO.getDocument());
 		Person person = new Person();
 		
 		if(rows != null) {
 			for (Map<String, Object> row : rows) {
 				person.setName( row.get("NAMES").toString());
 				person.setLastName( row.get("LAST_NAMES").toString() );
+				person.setDocumentType(row.get("DOCUMENT_TYPE").toString() );
+				person.setDocument(row.get("DOCUMENT").toString() );
 				person.setCorporateMail( row.get("CORPORATE_MAIL").toString() );
 				person.setPersonalMail( row.get("PERSONAL_MAIL").toString() );
 				person.setBirthdayDate( (Date) row.get("BIRTHDAY_DATE") );
@@ -48,7 +51,7 @@ public class PersonRepository extends BaseRepositoryDAO{
 		return person;
 	}
 
-	public BaseArrayModel<Person> getAllPersons(Transaction <?> t, Map<String, Object> request) throws Exception  {
+	/*public BaseArrayModel<Person> getAllPersons(Transaction <?> t, Map<String, Object> request) throws Exception  {
 		String sql = "SELECT "
 				+ "NAMES, "
 				+ "LAST_NAMES, "
@@ -73,7 +76,6 @@ public class PersonRepository extends BaseRepositoryDAO{
 			}
 		}
 		return persons;
-	}
-
+	}/*/
 
 }

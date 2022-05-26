@@ -16,7 +16,7 @@ public class TestInput implements Serializable{
 	private static final long serialVersionUID = 2151737440365190241L;
 	
 	@NonNull
-	@NotBlank(message = "El campo -test- no puede estar vacio")
+	@NotBlank(message = "El campo no puede estar vacio")
 	private String test;
 
 	public String getTest() {
