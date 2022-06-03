@@ -27,7 +27,7 @@ public class UserServices extends UserRepository{
 		rspModel = new ResponseModel();
 		Map<String, Object> mapResponse = loginRepository(loginInput);
 		try {
-			if( mapResponse.get("message").toString().equals(CodeResponseRequest.LOGIN_SUCESS) ) {
+			if( mapResponse.get("message").toString().equals(CodeResponseRequest.LOGIN_SUCCESS) ) {
 				String token =  saveTokenRepository(SecurityService.generateToken( mapResponse.get("id_user").toString())).get("token").toString();
 				if (token != null && !token.isEmpty()) {
 					mapResponse.remove("id_user");
