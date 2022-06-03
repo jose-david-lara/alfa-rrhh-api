@@ -76,22 +76,24 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlOutParameter("id_user", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("names", Types.VARCHAR));
-		paramList.add(new SqlOutParameter("id_person", Types.VARCHAR));
-		paramList.add(new SqlOutParameter("response", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?,?,?,?)}");
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_LOGIN(?,?,?,?,?,?,?,?)}");
 				cs.setString(1, loginInput.getUsername());
 				cs.setString(2, loginInput.getPassword());
 				cs.setString(3, loginInput.getIp());
-				cs.registerOutParameter(4, Types.VARCHAR);
-				cs.registerOutParameter(5, Types.VARCHAR);
+				cs.setString(4, loginInput.getDevice_last());
+				cs.setString(5, loginInput.getType_device());
 				cs.registerOutParameter(6, Types.VARCHAR);
 				cs.registerOutParameter(7, Types.VARCHAR);
+				cs.registerOutParameter(8, Types.VARCHAR);
 				return cs;
 			}
 		}, paramList);
@@ -104,7 +106,7 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
-		paramList.add(new SqlOutParameter("id_token", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("token", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("response", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {

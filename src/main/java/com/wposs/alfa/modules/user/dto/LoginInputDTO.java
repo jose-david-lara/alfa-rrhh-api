@@ -21,6 +21,12 @@ public class LoginInputDTO implements Serializable{
 	@NonNull
 	@NotBlank(message = "El campo no puede esta vacio")
 	private String ip;
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
+	private String device_last;
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
+	private String type_device;
 	
 	
 	public String getUsername() {
@@ -41,11 +47,24 @@ public class LoginInputDTO implements Serializable{
 	public void setIp(String ip) {
 		this.ip = ip;
 	} 
-
+	public String getDevice_last() {
+		return device_last;
+	}
+	public void setDevice_last(String device_last) {
+		this.device_last = device_last;
+	}
+	public String getType_device() {
+		return type_device;
+	}
+	public void setType_device(String type_device) {
+		this.type_device = type_device;
+	}
+	
 	
 	@Override
 	public String toString() {
-		return "LoginInput [userName=" + username + ", password=" + password + ", ip=" + ip + "]";
+		return "LoginInputDTO [username=" + username + ", password=" + password + ", ip=" + ip + ", device_last="
+				+ device_last + ", type_device=" + type_device + "]";
 	}
 
 }
