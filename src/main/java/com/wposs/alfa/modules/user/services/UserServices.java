@@ -3,14 +3,10 @@ package com.wposs.alfa.modules.user.services;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
-<<<<<<< HEAD
-import com.wposs.alfa.modules.user.repository.UserRepository;
-=======
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.security.SecurityService;
 import com.wposs.alfa_framework.spring.CodeResponseRequest;
->>>>>>> develop
 import com.wposs.alfa_framework.spring.ResponseModel;
 
 @Component
