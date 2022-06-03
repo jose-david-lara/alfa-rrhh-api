@@ -26,7 +26,7 @@ public class UserServices extends UserRepository{
 	public ResponseModel loginService(LoginInputDTO loginInput) throws Exception {
 		rspModel = new ResponseModel();
 		Map<String, Object> mapResponse = loginRepository(loginInput);
-		try {
+		try { 
 			if( mapResponse.get("message").toString().equals(CodeResponseRequest.LOGIN_SUCCESS) ) {
 				String token =  saveTokenRepository(SecurityService.generateToken( mapResponse.get("id_user").toString())).get("token").toString();
 				if (token != null && !token.isEmpty()) {
@@ -39,13 +39,16 @@ public class UserServices extends UserRepository{
 					rspModel.setCode("01");
 					rspModel.setMessage(CodeResponseRequest.ERROR_LOGIN);
 					rspModel.setError(true);
-					rspModel.setData(new HashMap<>().put("message", "No se pudo guardar el token"));
+					mapResponse.clear();
+					mapResponse.put("message", "No se pudo guardar el token");
+					rspModel.setData(mapResponse);
 				}
 			} else {
+				mapResponse.remove("id_user");
+				mapResponse.remove("names");
 				rspModel.setCode("01");
-				rspModel.setMessage(CodeResponseRequest.ERROR_LOGIN);
-				rspModel.setError(true);
-				rspModel.setData(mapResponse.get("response"));
+				rspModel.setError(false);
+				rspModel.setData(mapResponse);
 			}
 		} catch(Exception e) {
 			System.out.println("ERROR:::"+e.getMessage());
