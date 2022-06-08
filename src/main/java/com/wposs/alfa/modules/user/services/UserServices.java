@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
+import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.security.SecurityService;
 import com.wposs.alfa_framework.spring.CodeResponseRequest;
@@ -59,5 +60,30 @@ public class UserServices extends UserRepository{
 		
 		return rspModel;
 	}
+	
+	public ResponseModel updatePasswordUserService(UpdatePasswordInputDTO updatePasswordInputDTO) throws Exception {
+		rspModel = new ResponseModel();
+		
+		try { 
+			Map<String, Object> mapResponse = updatePasswordUserRepository(updatePasswordInputDTO);
+			if(mapResponse.get("message").toString().length() > 0) {
+				rspModel.setCode(CodeResponseRequest.COD_MSG_SUCCESS);
+				rspModel.setError(false);
+				rspModel.setData(mapResponse);				
+			} else {
+				mapResponse.put("message", CodeResponseRequest.COD_ERROR_EXCEPTION_BD+"|"+CodeResponseRequest.ERROR_EXCEPTION_BD);
+				rspModel.setCode(CodeResponseRequest.COD_MSG_SUCCESS);
+				rspModel.setError(false);
+				rspModel.setData(mapResponse);
+			}
+		} catch(Exception e) {
+			System.out.println("ERROR:::"+e.getMessage());
+			rspModel.setCode(CodeResponseRequest.COD_ERROR_EXCEPTION_BKND);
+			rspModel.setMessage(CodeResponseRequest.ERROR_BACKEND);
+			rspModel.setError(true);
+		}
+		
+		return rspModel;
+	}	
 	
 }
