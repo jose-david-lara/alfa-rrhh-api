@@ -14,10 +14,10 @@ for file in target/*.jar
 do
    jarfile=$file
 done
-LOGS_DIR="c:/libre/devops/logs/alfa-rrhh-api/$_APP"
+LOGS_DIR="c:/alfa/devops/logs/alfa-rrhh-api/$_APP"
 if [ ! -d "c:/" ]
 then
-	LOGS_DIR="/libre/devops/logs/alfa-rrhh-api/$_APP"
+	LOGS_DIR="/alfa/devops/logs/alfa-rrhh-api/$_APP"
 fi
 mkdir -p "$LOGS_DIR"
 rm -Rf $LOGS_DIR/*.*
