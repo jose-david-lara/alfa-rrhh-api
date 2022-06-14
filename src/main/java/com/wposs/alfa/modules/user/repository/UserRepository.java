@@ -134,17 +134,19 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("names", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PASSWORD(?,?,?,?,?)}");
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PASSWORD(?,?,?,?,?,?)}");
 				cs.setString(1, updatePasswordInputDTO.getUsername());
 				cs.setString(2, updatePasswordInputDTO.getOld_password());
 				cs.setString(3, updatePasswordInputDTO.getUpdate_password());
 				cs.setString(4, updatePasswordInputDTO.getToken());
 				cs.registerOutParameter(5, Types.VARCHAR);
+				cs.registerOutParameter(6, Types.VARCHAR);
 				return cs;
 			}
 		}, paramList);
