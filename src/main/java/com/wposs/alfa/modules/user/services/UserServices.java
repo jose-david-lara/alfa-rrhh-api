@@ -1,17 +1,13 @@
 package com.wposs.alfa.modules.user.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
 import com.wposs.alfa.modules.test.dto.AddressDTO;
 import com.wposs.alfa.modules.test.dto.EmailDTO;
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
@@ -26,15 +22,6 @@ public class UserServices extends UserRepository{
 
 	private ResponseModel rspModel;
 	public final static Logger LOGGER = LoggerFactory.getLogger(UserServices.class);
-
-	public ResponseModel searchUserByEmail(Map<String, Object> request) throws Exception {
-
-		ResponseModel rspModel = new ResponseModel();
-		Map<String, Object> response = new HashMap<>();
-		response.put("respuesta", "Exitoso!!!");
-		rspModel.setData(response);
-		return rspModel;
-	}
 
 	public ResponseModel loginService(LoginInputDTO loginInput) throws Exception {
 		rspModel = new ResponseModel();

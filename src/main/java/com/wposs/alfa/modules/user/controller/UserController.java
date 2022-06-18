@@ -1,7 +1,5 @@
 package com.wposs.alfa.modules.user.controller;
 
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
 import com.wposs.alfa.modules.user.services.UserServices;
-import com.wposs.alfa_framework.spring.Input;
-import com.wposs.alfa_framework.spring.Output;
 import com.wposs.alfa_framework.spring.ResponseModel;
 import com.wposs.alfa_framework.spring.ValidateBody;
 
@@ -25,16 +21,6 @@ import com.wposs.alfa_framework.spring.ValidateBody;
 @RequestMapping(path = "/users")
 public class UserController extends UserServices{
 	protected ValidateBody validBody;
-
-
-	@PostMapping("/searchUserByEmail")
-	@Input(name="email",			required="true", 			type="Email",				values="")
-	@Output(name="respuesta",			required="true", 			type="String",				values="")
-	public ResponseEntity<ResponseModel> searchUserByEmail(@RequestBody Map<String, Object> request, BindingResult bindigResult ) throws Exception {
-
-		return new ResponseEntity<ResponseModel>(searchUserByEmail(request), HttpStatus.OK);
-	}
-
 	
 	@PostMapping("/login")
 	public ResponseEntity<ResponseModel> login(@RequestBody @Valid LoginInputDTO loginInput, BindingResult bindingResult ) throws Exception {
