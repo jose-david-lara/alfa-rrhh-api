@@ -15,7 +15,10 @@ import org.springframework.stereotype.Component;
 
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
+import com.wposs.alfa.modules.user.dto.UpdatePersonalInfoDTO;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
+
+import net.bytebuddy.asm.Advice.Return;
 
 @Component
 public class UserRepository extends RepositoryDAO {
@@ -152,4 +155,29 @@ public class UserRepository extends RepositoryDAO {
 		}, paramList);
 		
 	}	
+	
+	public Map<String, Object> updatePersonalInformationRespository (UpdatePersonalInfoDTO updatePersonalInfoDTO) {
+		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
+
+		return jdbcTemplate.call(new CallableStatementCreator() {
+			@Override
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PASSWORD(?,?,?,?,?,?)}");
+				cs.setString(1, updatePersonalInfoDTO.getUsername());
+				cs.setString(2, updatePersonalInfoDTO.getNames());
+				cs.setString(3, updatePersonalInfoDTO.getSurnames());
+				cs.setString(4, updatePersonalInfoDTO.getPersonal_mail());
+				cs.setString(5, updatePersonalInfoDTO.getToken());
+				cs.registerOutParameter(6, Types.VARCHAR);
+				return cs;
+			}
+		}, paramList);
+	}
+	
 }

@@ -16,6 +16,7 @@ import com.wposs.alfa.modules.test.dto.AddressDTO;
 import com.wposs.alfa.modules.test.dto.EmailDTO;
 import com.wposs.alfa.modules.user.dto.LoginInputDTO;
 import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
+import com.wposs.alfa.modules.user.dto.UpdatePersonalInfoDTO;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.security.SecurityService;
 import com.wposs.alfa_framework.spring.CodeResponseRequest;
@@ -136,8 +137,15 @@ public class UserServices extends UserRepository{
 		}
 		LOGGER.info(":::RESPONSE UPDATEPASSWORDUSERSERVICE:::"+rspModel.toString(), UserServices.class.getName());
 		return rspModel;
-	}	
-
+	}
+	
+	
+	public ResponseModel updatePersonalInfoService(UpdatePersonalInfoDTO updatePersonalInfoDTO) {
+		rspModel = new ResponseModel();
+		Map<String, Object> map = updatePersonalInformationRespository(updatePersonalInfoDTO);
+		
+		return rspModel; 
+	}
 
 
 }
