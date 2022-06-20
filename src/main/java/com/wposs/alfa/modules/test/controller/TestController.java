@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wposs.alfa.modules.test.dto.TestInput;
+import com.wposs.alfa.modules.test.model.TestInput;
 import com.wposs.alfa.modules.test.service.TestServices;
 import com.wposs.alfa_framework.spring.ResponseModel;
 import com.wposs.alfa_framework.spring.ValidateBody;

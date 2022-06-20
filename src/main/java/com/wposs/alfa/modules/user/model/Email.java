@@ -1,4 +1,4 @@
-package com.wposs.alfa.modules.user.dto;
+package com.wposs.alfa.modules.user.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.lang.NonNull;
 
 
 
-public class EmailDTO implements Serializable{
+public class Email implements Serializable{
 
 
 
@@ -20,14 +20,14 @@ public class EmailDTO implements Serializable{
 	private static final long serialVersionUID = 3412349536791840424L;
 
 	@Valid
-	private List<AddressDTO> address;
+	private List<Address> address;
 	
 	@NonNull
 	@NotBlank(message = "El campo no puede estar vacio")
 	private String format;
 	
 	
-	private List<AttachmentFileDTO> attachments_file;
+	private List<AttachmentFile> attachments_file;
 	
 	@NonNull
 	@NotBlank(message = "El campo no puede estar vacio")
@@ -44,11 +44,11 @@ public class EmailDTO implements Serializable{
 	@NonNull
 	private Boolean attachments_flag;
 
-	public List<AddressDTO> getAddress() {
+	public List<Address> getAddress() {
 		return address;
 	}
 
-	public void setAddress(List<AddressDTO> address) {
+	public void setAddress(List<Address> address) {
 		this.address = address;
 	}
 
@@ -60,11 +60,11 @@ public class EmailDTO implements Serializable{
 		this.format = format;
 	}
 
-	public List<AttachmentFileDTO> getAttachments_file() {
+	public List<AttachmentFile> getAttachments_file() {
 		return attachments_file;
 	}
 
-	public void setAttachments_file(List<AttachmentFileDTO> attachments_file) {
+	public void setAttachments_file(List<AttachmentFile> attachments_file) {
 		this.attachments_file = attachments_file;
 	}
 

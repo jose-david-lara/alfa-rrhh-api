@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import com.wposs.alfa.modules.test.dto.AddressDTO;
-import com.wposs.alfa.modules.test.dto.EmailDTO;
-import com.wposs.alfa.modules.user.dto.LoginInputDTO;
-import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
+
+import com.wposs.alfa.modules.test.model.Address;
+import com.wposs.alfa.modules.test.model.Email;
+import com.wposs.alfa.modules.user.model.LoginInput;
+import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.security.SecurityService;
 import com.wposs.alfa_framework.spring.CodeResponseRequest;
@@ -23,7 +24,7 @@ public class UserServices extends UserRepository{
 	private ResponseModel rspModel;
 	public final static Logger LOGGER = LoggerFactory.getLogger(UserServices.class);
 
-	public ResponseModel loginService(LoginInputDTO loginInput) throws Exception {
+	public ResponseModel loginService(LoginInput loginInput) throws Exception {
 		rspModel = new ResponseModel();
 		Map<String, Object> mapResponse = loginRepository(loginInput);
 		try { 
@@ -65,12 +66,12 @@ public class UserServices extends UserRepository{
 		return rspModel;
 	}
 
-	public ResponseModel updatePasswordUserService(UpdatePasswordInputDTO updatePasswordInputDTO) throws Exception {
+	public ResponseModel updatePasswordUserService(UpdatePasswordInput updatePasswordInputDTO) throws Exception {
 		rspModel = new ResponseModel();
 		RestTemplate restTemplate = new RestTemplate();
-		AddressDTO addressDTO =  new AddressDTO();
-		List<AddressDTO> lisAddressDTO = new ArrayList<AddressDTO>();
-		EmailDTO emailDTO = new EmailDTO();
+		Address addressDTO =  new Address();
+		List<Address> lisAddressDTO = new ArrayList<Address>();
+		Email emailDTO = new Email();
 
 		try { 
 

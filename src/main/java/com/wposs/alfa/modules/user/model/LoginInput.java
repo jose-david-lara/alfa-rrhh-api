@@ -1,4 +1,4 @@
-package com.wposs.alfa.modules.user.dto;
+package com.wposs.alfa.modules.user.model;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.lang.NonNull;
 
 @Entity
-public class LoginInputDTO implements Serializable{
+public class LoginInput implements Serializable{
 	
 	private static final long serialVersionUID = -581482128021864287L;
 	

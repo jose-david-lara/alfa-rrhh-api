@@ -1,11 +1,11 @@
-package com.wposs.alfa.modules.persons.dto;
+package com.wposs.alfa.modules.persons.model;
 
 import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class PersonByDocumentInputDTO implements Serializable{
+public class PersonByDocumentInput implements Serializable{
 
 	private static final long serialVersionUID = -6866287639429103034L;
 	

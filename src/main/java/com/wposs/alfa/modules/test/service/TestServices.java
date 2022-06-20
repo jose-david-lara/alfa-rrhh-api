@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.wposs.alfa.modules.test.dto.EmailDTO;
-import com.wposs.alfa.modules.test.dto.TestInput;
+import com.wposs.alfa.modules.test.model.Email;
+import com.wposs.alfa.modules.test.model.TestInput;
 import com.wposs.alfa.modules.test.repository.TestRepository;
 import com.wposs.alfa_framework.spring.ResponseModel;
 
@@ -49,7 +49,7 @@ public class TestServices extends TestRepository{
 			
 			Gson gson = new Gson();
 			RestTemplate restTemplate = new RestTemplate();
-			EmailDTO emailDTO = new EmailDTO();
+			Email emailDTO = new Email();
 			emailDTO.setBody("hola");
 			
 			String str = "{\r\n"
@@ -72,7 +72,7 @@ public class TestServices extends TestRepository{
 					+ "    \"attachments_flag\":false\r\n"
 					+ "    \r\n"
 					+ "}";
-			emailDTO = gson.fromJson(str, EmailDTO.class);
+			emailDTO = gson.fromJson(str, Email.class);
 			
 			System.out.println("::::ENVIO:::"+emailDTO.toString());
 		    ResponseEntity<ResponseModel> responseEntity = restTemplate.postForEntity("http://localhost:13014/email/sendEmail", emailDTO, ResponseModel.class);

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.persons.dto.PersonByDocumentInputDTO;
 import com.wposs.alfa.modules.persons.model.Person;
+import com.wposs.alfa.modules.persons.model.PersonByDocumentInput;
 import com.wposs.alfa.modules.persons.repository.PersonRepository;
 import com.wposs.alfa_framework.spring.ResponseModel;
 
 @Component
 public class PersonServices extends PersonRepository{
 	
-	public ResponseModel getPersonByDocumentService(PersonByDocumentInputDTO inputDTO) throws Exception {
+	public ResponseModel getPersonByDocumentService(PersonByDocumentInput inputDTO) throws Exception {
 		ResponseModel responseModel = new ResponseModel(); 
 		Person person = getPersonByDocument(inputDTO);
 		responseModel.setCode("00");

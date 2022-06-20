@@ -1,14 +1,13 @@
-package com.wposs.alfa.modules.user.dto;
+package com.wposs.alfa.modules.test.model;
 
 import java.io.Serializable;
 
-public class AttachmentFileDTO implements Serializable{
-
+public class AttachmentFile implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5689848466548653868L;
+	private static final long serialVersionUID = -2573050605892796392L;
 	private String name_file;
 	private String base64_file;
 	

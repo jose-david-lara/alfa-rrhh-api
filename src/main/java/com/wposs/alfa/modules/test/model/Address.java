@@ -1,4 +1,4 @@
-package com.wposs.alfa.modules.test.dto;
+package com.wposs.alfa.modules.test.model;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.lang.NonNull;
 
-public class AddressDTO implements Serializable{
+public class Address implements Serializable{
 
 	/**
 	 * 

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.persons.dto.PersonByDocumentInputDTO;
 import com.wposs.alfa.modules.persons.model.Person;
+import com.wposs.alfa.modules.persons.model.PersonByDocumentInput;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
@@ -20,7 +20,7 @@ public class PersonRepository extends RepositoryDAO{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public Person getPersonByDocument(PersonByDocumentInputDTO inputDTO) throws Exception  {
+	public Person getPersonByDocument(PersonByDocumentInput inputDTO) throws Exception  {
 		String sql = "SELECT "
 				+ "NAMES, "
 				+ "LAST_NAMES, "

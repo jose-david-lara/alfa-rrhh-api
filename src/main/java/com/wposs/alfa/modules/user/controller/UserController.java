@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wposs.alfa.modules.user.dto.LoginInputDTO;
-import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
+import com.wposs.alfa.modules.user.model.LoginInput;
+import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
 import com.wposs.alfa.modules.user.services.UserServices;
 import com.wposs.alfa_framework.spring.ResponseModel;
 import com.wposs.alfa_framework.spring.ValidateBody;
@@ -23,7 +23,7 @@ public class UserController extends UserServices{
 	protected ValidateBody validBody;
 	
 	@PostMapping("/login")
-	public ResponseEntity<ResponseModel> login(@RequestBody @Valid LoginInputDTO loginInput, BindingResult bindingResult ) throws Exception {
+	public ResponseEntity<ResponseModel> login(@RequestBody @Valid LoginInput loginInput, BindingResult bindingResult ) throws Exception {
 		if(bindingResult.hasErrors()){
 	    	validBody = new ValidateBody();
 	    	return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindingResult),HttpStatus.OK);
@@ -32,7 +32,7 @@ public class UserController extends UserServices{
 	}
 	
 	@PostMapping("/updatePasswordUser")
-	public ResponseEntity<ResponseModel> updatePasswordUser(@RequestBody @Valid UpdatePasswordInputDTO updatePasswordInputDTO, BindingResult bindingResult ) throws Exception {
+	public ResponseEntity<ResponseModel> updatePasswordUser(@RequestBody @Valid UpdatePasswordInput updatePasswordInputDTO, BindingResult bindingResult ) throws Exception {
 		if(bindingResult.hasErrors()){
 	    	validBody = new ValidateBody();
 	    	return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindingResult),HttpStatus.OK);

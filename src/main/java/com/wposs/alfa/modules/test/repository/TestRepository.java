@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.wposs.alfa.modules.test.dto.TestInput;
+import com.wposs.alfa.modules.test.model.TestInput;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 

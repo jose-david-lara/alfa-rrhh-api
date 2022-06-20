@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wposs.alfa.modules.persons.dto.PersonByDocumentInputDTO;
+import com.wposs.alfa.modules.persons.model.PersonByDocumentInput;
 import com.wposs.alfa.modules.persons.service.PersonServices;
 import com.wposs.alfa_framework.spring.ResponseModel;
 import com.wposs.alfa_framework.spring.ValidateBody;
@@ -25,7 +25,7 @@ public class PersonController extends PersonServices{
 	protected ValidateBody validBody;
 
 	@PostMapping("/getPersonByDocument")
-	public ResponseEntity<ResponseModel> getPersonByDocument(@RequestBody @Valid PersonByDocumentInputDTO inputDTO, BindingResult bindigResult ) throws Exception  {
+	public ResponseEntity<ResponseModel> getPersonByDocument(@RequestBody @Valid PersonByDocumentInput inputDTO, BindingResult bindigResult ) throws Exception  {
 		if(bindigResult.hasErrors()){
 	    	validBody = new ValidateBody();
 	    	return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindigResult),HttpStatus.OK);
