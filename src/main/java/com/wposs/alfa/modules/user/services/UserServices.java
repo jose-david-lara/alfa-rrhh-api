@@ -95,16 +95,21 @@ public class UserServices extends UserRepository{
 				LOGGER.info(":::REQUEST SENDEMAIL:::"+emailDTO.toString(), UserServices.class.getName());
 
 
-				ResponseEntity<ResponseModel> responseEntity = restTemplate.postForEntity("http://localhost:13014/email/sendEmail", emailDTO, ResponseModel.class);
-				System.out.println(":::RESPUESTA::::"+responseEntity.getBody());
-				ResponseModel respEmail = responseEntity.getBody();
-				
-				LOGGER.info(":::RESPONSE SENDEMAIL:::"+respEmail.toString(), UserServices.class.getName());
-
-				if(respEmail.getError() == false) {
-					mapResponse.put("email_send", true);
-				}else if(respEmail.getError() == true) {
-					mapResponse.put("email_send", false);	
+				try {
+					ResponseEntity<ResponseModel> responseEntity = restTemplate.postForEntity("http://localhost:13014/email/sendEmail", emailDTO, ResponseModel.class);
+					System.out.println(":::RESPUESTA::::"+responseEntity.getBody());
+					ResponseModel respEmail = responseEntity.getBody();
+					LOGGER.info(":::RESPONSE SENDEMAIL:::"+respEmail.toString(), UserServices.class.getName());
+					if(respEmail.getError() == false) {
+						mapResponse.put("email_send", true);
+					}else if(respEmail.getError() == true) {
+						mapResponse.put("email_send", false);	
+					}
+				}catch (Exception e) {
+					// TODO: handle exception
+					LOGGER.info(":::RESPONSE SENDEMAIL:::"+e.getMessage(), UserServices.class.getName());
+					LOGGER.info(":::RESPONSE SENDEMAIL::: servicio de email no responde y/o error", UserServices.class.getName());
+					mapResponse.put("email_send", false);
 				}
 
 				rspModel.setCode(CodeResponseRequest.COD_MSG_SUCCESS);
