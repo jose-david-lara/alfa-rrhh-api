@@ -106,7 +106,6 @@ public class UserServices extends UserRepository{
 						mapResponse.put("email_send", false);	
 					}
 				}catch (Exception e) {
-					// TODO: handle exception
 					LOGGER.info(":::RESPONSE SENDEMAIL:::"+e.getMessage(), UserServices.class.getName());
 					LOGGER.info(":::RESPONSE SENDEMAIL::: servicio de email no responde y/o error", UserServices.class.getName());
 					mapResponse.put("email_send", false);
