@@ -18,8 +18,6 @@ import com.wposs.alfa.modules.user.dto.UpdatePasswordInputDTO;
 import com.wposs.alfa.modules.user.dto.UpdatePersonalInfoDTO;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
-import net.bytebuddy.asm.Advice.Return;
-
 @Component
 public class UserRepository extends RepositoryDAO {
 	public Map<String, Object> exampleQueySimple(Map<String, Object> request) throws Exception  {
@@ -169,7 +167,7 @@ public class UserRepository extends RepositoryDAO {
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PASSWORD(?,?,?,?,?,?)}");
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PERSONAL_INFORMATION(?,?,?,?,?,?,?)}");
 				cs.setString(1, updatePersonalInfoDTO.getUsername());
 				cs.setString(2, updatePersonalInfoDTO.getNames());
 				cs.setString(3, updatePersonalInfoDTO.getSurnames());
