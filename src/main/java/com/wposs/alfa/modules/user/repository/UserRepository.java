@@ -163,6 +163,7 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {
@@ -175,6 +176,7 @@ public class UserRepository extends RepositoryDAO {
 				cs.setString(4, updatePersonalInfoDTO.getPersonal_mail());
 				cs.setString(5, updatePersonalInfoDTO.getToken());
 				cs.registerOutParameter(6, Types.VARCHAR);
+				cs.registerOutParameter(7, Types.VARCHAR);
 				return cs;
 			}
 		}, paramList);

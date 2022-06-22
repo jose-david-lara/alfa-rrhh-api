@@ -65,4 +65,3 @@ public class UserController extends UserServices{
 	}
 
 }
-

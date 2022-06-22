@@ -142,8 +142,31 @@ public class UserServices extends UserRepository{
 	
 	public ResponseModel updatePersonalInfoService(UpdatePersonalInfoDTO updatePersonalInfoDTO) {
 		rspModel = new ResponseModel();
-		Map<String, Object> map = updatePersonalInformationRespository(updatePersonalInfoDTO);
-		
+		try {
+			Map<String, Object> map = updatePersonalInformationRespository(updatePersonalInfoDTO);
+			if ( map.get("message").toString().equals(CodeResponseRequest.SUCCESS_UPDATE_PERSONAL_INFORMATION) ) {
+				rspModel.setError(false);
+				rspModel.setCode(map.get("codeResponse").toString());
+				map.put("code_response", map.get("codeResponse").toString());
+				map.replace("message", map.get("message").toString(), CodeResponseRequest.SUCCESS_UPDATE_PERSONAL_INFORMATION); 
+				map.put("message", CodeResponseRequest.SUCCESS_UPDATE_PERSONAL_INFORMATION);
+				rspModel.setData(map);
+				rspModel.setMessage(CodeResponseRequest.SUCCESS_UPDATE_PERSONAL_INFORMATION);
+			} else {
+				rspModel.setError(false);
+				rspModel.setCode(map.get("codeResponse").toString());
+				map.put("code_response", map.get("codeResponse").toString());
+				map.replace("message", map.get("message").toString(), CodeResponseRequest.ERROR_UPDATE_PERSONAL_INFORMATION);
+				rspModel.setData(map);
+				rspModel.setMessage(CodeResponseRequest.ERROR_UPDATE_PERSONAL_INFORMATION);
+			}
+		} catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			rspModel.setError(true);
+			rspModel.setCode(null);
+			rspModel.setData(null);
+			rspModel.setMessage(CodeResponseRequest.ERROR_UPDATE_PERSONAL_INFORMATION); 
+		}
 		return rspModel; 
 	}
 
