@@ -13,6 +13,7 @@ import com.wposs.alfa.modules.test.model.Address;
 import com.wposs.alfa.modules.test.model.Email;
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
+import com.wposs.alfa.modules.user.model.UpdateStateUser;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.security.SecurityService;
 import com.wposs.alfa_framework.spring.CodeResponseRequest;
@@ -129,6 +130,32 @@ public class UserServices extends UserRepository{
 		LOGGER.info(":::RESPONSE UPDATEPASSWORDUSERSERVICE:::"+rspModel.toString(), UserServices.class.getName());
 		return rspModel;
 	}	
+	
+	public ResponseModel updateStateUserService (UpdateStateUser updateStateUser) {
+		rspModel = new ResponseModel();
+		if (updateStateUser.getState().equalsIgnoreCase("activo")) {
+			updateStateUser.setState("1");
+		} else if (updateStateUser.getState().equalsIgnoreCase("inactivo")) {
+			updateStateUser.setState("2");
+		} else {
+			rspModel.setError(true);
+			rspModel.setCode(CodeResponseRequest.COD_ERROR_UPDATE_STATE_USER);
+			rspModel.setMessage(CodeResponseRequest.MSG_ERROR_STATE_INVALID);
+			return rspModel;
+		}
+		Map<String, Object> map = updateStateUserRepository(updateStateUser);
+		if (map.get("codeResponse").toString().equals(CodeResponseRequest.COD_MSG_SUCCESS)) {
+			rspModel.setError(false);
+			rspModel.setCode(CodeResponseRequest.COD_MSG_SUCCESS);
+			rspModel.setMessage(map.get("message").toString());
+			rspModel.setData(map); 
+		} else {
+			rspModel.setError(false);
+			rspModel.setCode(map.get("codeResponse").toString());
+			rspModel.setMessage(map.get("message").toString());
+		}
+		return rspModel; 
+	}
 
 
 

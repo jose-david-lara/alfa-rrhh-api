@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
+import com.wposs.alfa.modules.user.model.UpdateStateUser;
 import com.wposs.alfa.modules.user.services.UserServices;
 import com.wposs.alfa_framework.spring.ResponseModel;
 import com.wposs.alfa_framework.spring.ValidateBody;
@@ -38,6 +39,16 @@ public class UserController extends UserServices{
 	    	return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindingResult),HttpStatus.OK);
 	    }
 		return new ResponseEntity<ResponseModel>(updatePasswordUserService(updatePasswordInputDTO), HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/updateStateUser")
+	public ResponseEntity<ResponseModel> updateStateUser(@RequestBody @Valid UpdateStateUser UpdateStateUser, BindingResult bindingResult ) throws Exception {
+		if(bindingResult.hasErrors()){
+	    	validBody = new ValidateBody();
+	    	return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindingResult),HttpStatus.OK);
+	    }
+		return new ResponseEntity<ResponseModel>(updateStateUserService(UpdateStateUser), HttpStatus.OK);
 	}
 
 }
