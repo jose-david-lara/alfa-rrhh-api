@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
 import com.wposs.alfa.modules.user.model.UpdatePersonalInfoInput;
+import com.wposs.alfa.modules.user.model.UpdateStateUser;
 import com.wposs.alfa_framework.spring.RepositoryDAO;
 
 @Component
@@ -162,7 +163,6 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
-
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
@@ -176,6 +176,30 @@ public class UserRepository extends RepositoryDAO {
 				cs.registerOutParameter(7, Types.VARCHAR);
 				return cs;
 			}
+		}, paramList);
+	}
+		
+	public Map<String, Object> updateStateUserRepository(UpdateStateUser UpdateStateUser) {
+		
+		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
+
+		return jdbcTemplate.call(new CallableStatementCreator() {
+			@Override
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_STATE_USER(?,?,?,?,?)}");
+				cs.setString(1, UpdateStateUser.getUsername());
+				cs.setString(2, UpdateStateUser.getState());
+				cs.setString(3, UpdateStateUser.getToken());
+				cs.registerOutParameter(4, Types.VARCHAR);
+				cs.registerOutParameter(5, Types.VARCHAR);
+				return cs;
+			}
+			
 		}, paramList);
 	}
 	
