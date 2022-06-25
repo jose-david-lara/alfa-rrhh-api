@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
 import com.wposs.alfa.modules.test.model.Address;
 import com.wposs.alfa.modules.test.model.Email;
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
+import com.wposs.alfa.modules.user.model.UpdatePersonalInfoInput;
 import com.wposs.alfa.modules.user.repository.UserRepository;
 import com.wposs.alfa_framework.security.SecurityService;
 import com.wposs.alfa_framework.spring.CodeResponseRequest;
@@ -128,8 +128,40 @@ public class UserServices extends UserRepository{
 		}
 		LOGGER.info(":::RESPONSE UPDATEPASSWORDUSERSERVICE:::"+rspModel.toString(), UserServices.class.getName());
 		return rspModel;
-	}	
-
+	}
+	
+	
+	public ResponseModel updatePersonalInfoService(UpdatePersonalInfoInput updatePersonalInfoInput) {
+		rspModel = new ResponseModel();
+		try {
+			Map<String, Object> map = updatePersonalInformationRespository(updatePersonalInfoInput);
+			if ( map.get("message").toString().equals(CodeResponseRequest.SUCCESS_UPDATE_PERSONAL_INFORMATION) ) {
+				map.replace("message", map.get("message").toString(), CodeResponseRequest.SUCCESS_UPDATE_PERSONAL_INFORMATION); 
+				rspModel.setMessage(map.get("message").toString());
+				rspModel.setError(false);
+				rspModel.setCode(map.get("codeResponse").toString());
+				rspModel.setData(map);
+			} else if (map.get("message").toString().equals(CodeResponseRequest.ERROR_UPDATE_PERSONAL_INFORMATION)) {
+				map.replace("message", map.get("message").toString(), CodeResponseRequest.ERROR_UPDATE_PERSONAL_INFORMATION);
+				rspModel.setMessage(map.get("message").toString());
+				rspModel.setError(false);
+				rspModel.setCode(map.get("codeResponse").toString());
+				rspModel.setData(map);
+			} else {
+				map.replace("message", map.get("message").toString(), CodeResponseRequest.ERROR_UPDATE_PERSONAL_INFORMATION_TOKEN);
+				rspModel.setMessage(map.get("message").toString());
+				rspModel.setError(false);
+				rspModel.setCode(map.get("codeResponse").toString());
+				rspModel.setData(map);
+			}
+		} catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			rspModel.setError(true);
+			rspModel.setCode(CodeResponseRequest.COD_ERROR_EXCEPTION_BKND);
+			rspModel.setMessage(CodeResponseRequest.ERROR_BACKEND); 
+		}
+		return rspModel; 
+	}
 
 
 }
