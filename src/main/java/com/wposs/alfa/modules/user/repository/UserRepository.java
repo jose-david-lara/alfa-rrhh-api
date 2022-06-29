@@ -161,19 +161,29 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PERSONAL_INFORMATION(?,?,?,?,?,?,?)}");
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_PERSONAL_INFORMATION(?,?,?,?,?,?,?,?,?,?,?,?)}");
 				cs.setString(1, updatePersonalInfoInput.getUsername());
 				cs.setString(2, updatePersonalInfoInput.getNames());
 				cs.setString(3, updatePersonalInfoInput.getSurnames());
 				cs.setString(4, updatePersonalInfoInput.getPersonal_mail());
-				cs.setString(5, updatePersonalInfoInput.getToken());
-				cs.registerOutParameter(6, Types.VARCHAR);
-				cs.registerOutParameter(7, Types.VARCHAR);
+				cs.setString(5, updatePersonalInfoInput.getPhone());
+				cs.setString(6, updatePersonalInfoInput.getAdress());
+				cs.setString(7, updatePersonalInfoInput.getCountry());
+				cs.setString(8, updatePersonalInfoInput.getState());
+				cs.setString(9, updatePersonalInfoInput.getCity());
+				cs.setString(10, updatePersonalInfoInput.getToken());
+				cs.registerOutParameter(11, Types.VARCHAR);
+				cs.registerOutParameter(12, Types.VARCHAR);
 				return cs;
 			}
 		}, paramList);
