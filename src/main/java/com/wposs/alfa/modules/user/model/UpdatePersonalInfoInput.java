@@ -27,6 +27,27 @@ public class UpdatePersonalInfoInput implements Serializable {
 	
 	@NonNull
 	@NotBlank(message = "El campo no puede esta vacio")
+	String phone;
+	
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
+	String adress;
+	
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
+	String country;
+	
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
+	String state;
+	
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
+	String city;
+	
+
+	@NonNull
+	@NotBlank(message = "El campo no puede esta vacio")
 	String token;
 
 	public String getUsername() {
@@ -69,10 +90,51 @@ public class UpdatePersonalInfoInput implements Serializable {
 		this.token = token;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public String getAdress() {
+		return adress;
+	}
+	
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	public String getState() {
+		return state;
+	}
+	
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	@Override
 	public String toString() {
-		return "UpdatePersonalInfoDTO [username=" + username + ", names=" + names + ", surnames=" + surnames
-				+ ", personal_mail=" + personal_mail + ", token=" + token + "]";
+		return "UpdatePersonalInfoInput [username=" + username + ", names=" + names + ", surnames=" + surnames
+				+ ", personal_mail=" + personal_mail + ", phone=" + phone + ", adress=" + adress + ", country="
+				+ country + ", state=" + state + ", city=" + city + ", token=" + token + "]";
 	}
 
 }
