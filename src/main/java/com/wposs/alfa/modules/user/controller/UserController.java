@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.wposs.alfa.modules.user.model.CreateUserPersonInput;
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
 import com.wposs.alfa.modules.user.model.UpdatePersonalInfoInput;
@@ -57,6 +59,15 @@ public class UserController extends UserServices{
 			return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindingResult),HttpStatus.OK);
 		}
 		return new ResponseEntity<ResponseModel>(updateStateUserService(UpdateStateUser), HttpStatus.OK);
-	}	
+	}
+	
+	@PostMapping("/createPersonUser")
+	public ResponseEntity<ResponseModel> createPersonUser(@RequestBody @Valid CreateUserPersonInput createUserPersonInput, BindingResult bindingResult ) throws Exception {
+		if(bindingResult.hasErrors()){
+			validBody = new ValidateBody();
+			return new ResponseEntity<ResponseModel>(validBody.validBodyRequest(bindingResult),HttpStatus.OK);
+		}
+		return new ResponseEntity<ResponseModel>(createPersonUserService(createUserPersonInput), HttpStatus.OK);
+	}
 
 }

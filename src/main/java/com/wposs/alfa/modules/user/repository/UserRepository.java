@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
+
+import com.wposs.alfa.modules.user.model.CreateUserPersonInput;
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
 import com.wposs.alfa.modules.user.model.UpdatePersonalInfoInput;
@@ -207,6 +209,69 @@ public class UserRepository extends RepositoryDAO {
 				cs.setString(3, UpdateStateUser.getToken());
 				cs.registerOutParameter(4, Types.VARCHAR);
 				cs.registerOutParameter(5, Types.VARCHAR);
+				return cs;
+			}
+			
+		}, paramList);
+	}
+	
+	public Map<String, Object> createPersonRepository(CreateUserPersonInput createUserPersonInput){
+		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
+
+		return jdbcTemplate.call(new CallableStatementCreator() {
+			@Override
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_STATE_USER(?,?,?,?,?,?,?,?,?)}");
+				cs.setString(1, createUserPersonInput.getNumber_identification());
+				cs.setString(2, createUserPersonInput.getUsername());
+				cs.setString(3, createUserPersonInput.getIp());
+				cs.setString(4, createUserPersonInput.getPassword());
+				cs.setString(5, createUserPersonInput.getIp_device());
+				cs.setString(6, createUserPersonInput.getType_device());
+				cs.setString(7, createUserPersonInput.getIp());
+				cs.registerOutParameter(8, Types.VARCHAR);
+				cs.registerOutParameter(9, Types.VARCHAR);
+				return cs;
+			}
+			
+		}, paramList);
+	}
+	
+	
+	public Map<String, Object> createUserRespository(CreateUserPersonInput createUserPersonInput) {
+		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
+		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
+
+		return jdbcTemplate.call(new CallableStatementCreator() {
+			@Override
+			public CallableStatement createCallableStatement(Connection con) throws SQLException {
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_STATE_USER(?,?,?,?,?,?,?,?,?)}");
+				cs.setString(1, createUserPersonInput.getNumber_identification());
+				cs.setString(2, createUserPersonInput.getUsername());
+				cs.setString(3, createUserPersonInput.getIp());
+				cs.setString(4, createUserPersonInput.getPassword());
+				cs.setString(5, createUserPersonInput.getIp_device());
+				cs.setString(6, createUserPersonInput.getType_device());
+				cs.setString(7, createUserPersonInput.getIp());
+				cs.registerOutParameter(8, Types.VARCHAR);
+				cs.registerOutParameter(9, Types.VARCHAR);
 				return cs;
 			}
 			

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.wposs.alfa.modules.test.model.Address;
 import com.wposs.alfa.modules.test.model.Email;
+import com.wposs.alfa.modules.user.model.CreateUserPersonInput;
 import com.wposs.alfa.modules.user.model.LoginInput;
 import com.wposs.alfa.modules.user.model.UpdatePasswordInput;
 import com.wposs.alfa.modules.user.model.UpdatePersonalInfoInput;
@@ -189,5 +190,13 @@ public class UserServices extends UserRepository{
 		}
 		return rspModel; 
 	}
+	
+	public ResponseModel createPersonUserService (CreateUserPersonInput createUserPersonInput) {
+		rspModel = new ResponseModel();
+		Map<String, Object> mapPerson = createPersonRepository(createUserPersonInput);
+		
+		return rspModel;
+	}
+	
 
 }
