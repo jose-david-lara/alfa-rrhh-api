@@ -224,22 +224,32 @@ public class UserRepository extends RepositoryDAO {
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
+		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlOutParameter("codeResponse", Types.VARCHAR));
 		paramList.add(new SqlOutParameter("message", Types.VARCHAR));
 
 		return jdbcTemplate.call(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_UPDATE_STATE_USER(?,?,?,?,?,?,?,?,?)}");
-				cs.setString(1, createUserPersonInput.getNumber_identification());
-				cs.setString(2, createUserPersonInput.getUsername());
-				cs.setString(3, createUserPersonInput.getIp());
-				cs.setString(4, createUserPersonInput.getPassword());
-				cs.setString(5, createUserPersonInput.getIp_device());
-				cs.setString(6, createUserPersonInput.getType_device());
-				cs.setString(7, createUserPersonInput.getIp());
-				cs.registerOutParameter(8, Types.VARCHAR);
-				cs.registerOutParameter(9, Types.VARCHAR);
+				CallableStatement cs = con.prepareCall("{call RRHH.PKG_GENERALES.PROCD_CREATE_PERSON(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+				cs.setString(1, createUserPersonInput.getNames());
+				cs.setString(2, createUserPersonInput.getLast_names());
+				cs.setString(3, createUserPersonInput.getDocument_type());
+				cs.setString(4, createUserPersonInput.getDocument());
+				cs.setString(5, createUserPersonInput.getCorporate_mail());
+				cs.setString(6, createUserPersonInput.getPersonal_mail());
+				cs.setString(7, createUserPersonInput.getBirthday_date());
+				cs.setString(8, createUserPersonInput.getPhone());
+				cs.setString(9, createUserPersonInput.getAdress());
+				cs.setString(10, createUserPersonInput.getCountry());
+				cs.setString(11, createUserPersonInput.getState());
+				cs.setString(12, createUserPersonInput.getCity());
+				cs.registerOutParameter(13, Types.VARCHAR);
+				cs.registerOutParameter(14, Types.VARCHAR);
 				return cs;
 			}
 			
@@ -247,7 +257,7 @@ public class UserRepository extends RepositoryDAO {
 	}
 	
 	
-	public Map<String, Object> createUserRespository(CreateUserPersonInput createUserPersonInput) {
+	/*public Map<String, Object> createUserRespository(CreateUserPersonInput createUserPersonInput) {
 		List<SqlParameter> paramList = new ArrayList<SqlParameter>();
 		paramList.add(new SqlParameter(Types.VARCHAR));
 		paramList.add(new SqlParameter(Types.VARCHAR));
@@ -276,6 +286,6 @@ public class UserRepository extends RepositoryDAO {
 			}
 			
 		}, paramList);
-	}
+	}*/
 	
 }
